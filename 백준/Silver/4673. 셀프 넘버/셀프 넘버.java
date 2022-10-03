@@ -17,13 +17,13 @@ public class Main {
     }
 
     public static int d(int n) {
-        char[] numbers = (n+"").toCharArray();
-        int sum = 0;
+        int sum = n;
 
-        for(char number : numbers) {
-            sum += number - 48;
+        while(n != 0) {
+            sum += n%10;
+            n = n/10;
         }
 
-        return n + sum;
+        return sum;
     }
 }
