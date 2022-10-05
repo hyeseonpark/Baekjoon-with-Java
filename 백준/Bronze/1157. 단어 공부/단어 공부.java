@@ -1,39 +1,32 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        char[] valueArray = br.readLine().toCharArray();
-        Map<Character, Integer> checkChar = new HashMap<>();
-
-        for (char value : valueArray) {
-            if (value >= 'a') {
-                value = (char)(value - 32);
+        int c = System.in.read();
+        int[] arr = new int[26];
+        
+        while (c > 64) { // 알파벳을 입력받는 동안
+            if (c <97) { // 대문자의 경우
+                arr[c - 65]++;
+            } else { // 소문자의 경우
+                arr[c - 97]++;
             }
-            checkChar.put(value, checkChar.getOrDefault(value, 0) + 1);
+            
+            c = System.in.read(); // 다음 알파벳 새로 입력
         }
-
-        int maxValue = Collections.max(checkChar.values());
-        int time = 0;
-
-        for (Map.Entry<Character, Integer> value : checkChar.entrySet()) {
-            if (value.getValue() == maxValue)
-                time++;
+        
+        int max = -1;
+        char ch = '?';
+        
+        for (int i=0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+                ch = (char) (i + 'A');
+                
+            } else if (arr[i] != 0 && arr[i] == max) {
+                ch = '?';
+            }
         }
-
-        Comparator<Map.Entry<Character, Integer>> comparator
-                = Map.Entry.comparingByValue();
-
-        if (time > 1) {
-            System.out.print("?");
-        } else {
-            System.out.print(Collections.max(checkChar.entrySet(), comparator).getKey());
-        }
+        System.out.println(ch);
     }
 }
